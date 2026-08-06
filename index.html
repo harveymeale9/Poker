@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0C1210">
+<title>Felt Ledger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Sora:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand"><span class="brand-pip">♠</span> Felt Ledger</div>
+  <div class="topbar-right">
+    <div class="sync" id="syncIndicator" title="Sync status">
+      <span class="sync-dot" id="syncDot"></span>
+      <span class="sync-label" id="syncLabel">Local</span>
+    </div>
+    <button class="icon-btn" id="settingsBtn" aria-label="Sync settings">⚙</button>
+  </div>
+</header>
+
+<main class="page">
+
+  <!-- ============ DASHBOARD ============ -->
+  <section class="tab" id="tab-dashboard">
+    <div class="banner" id="connectBanner" hidden>
+      <span>Data is only saved on this device. Connect GitHub to sync everywhere.</span>
+      <button class="btn btn-small" id="connectBannerBtn">Connect</button>
+    </div>
+
+    <div class="verdict" id="verdict">
+      <p class="verdict-line" id="verdictLine">Building your baseline.</p>
+      <p class="verdict-sub" id="verdictSub">Log tonight's session to get started.</p>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Punt Rate</div>
+        <div class="kpi-value" id="kpiPuntRate">—</div>
+        <div class="kpi-unit">BB / 100 · trailing 7,500 hands</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Punt Frequency</div>
+        <div class="kpi-value" id="kpiPuntFreq">—</div>
+        <div class="kpi-unit">punts / hands · trailing 7,500</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Sloppy Play Frequency</div>
+        <div class="kpi-value" id="kpiSloppyFreq">—</div>
+        <div class="kpi-unit">sloppy / hands · trailing 7,500</div>
+      </div>
+    </div>
+
+    <div class="card chart-card">
+      <div class="chart-head">
+        <h2 class="card-title">Daily discipline</h2>
+        <div class="chips" id="rangeChips">
+          <button class="chip" data-range="30">30d</button>
+          <button class="chip active" data-range="90">90d</button>
+          <button class="chip" data-range="all">All</button>
+        </div>
+      </div>
+      <div class="chart-wrap"><canvas id="mainChart"></canvas></div>
+      <p class="chart-empty" id="chartEmpty" hidden>No sessions logged yet — the chart fills in as you play.</p>
+    </div>
+
+    <div class="card lifetime-card">
+      <h2 class="card-title">Lifetime vs trailing 7,500</h2>
+      <div class="stat-table" id="statTable"></div>
+    </div>
+  </section>
+
+  <!-- ============ DAILY INPUT ============ -->
+  <section class="tab" id="tab-input" hidden>
+    <div class="card form-card">
+      <h2 class="card-title">Tonight's session</h2>
+
+      <div class="field">
+        <label for="inDate">Date</label>
+        <input type="date" id="inDate">
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="inHands">Hands played</label>
+          <input type="number" id="inHands" inputmode="numeric" min="0" placeholder="0">
+        </div>
+        <div class="field">
+          <label for="inPunts">Punts</label>
+          <input type="number" id="inPunts" inputmode="numeric" min="0" placeholder="0">
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="inBB">Total BB punted</label>
+          <input type="number" id="inBB" inputmode="decimal" min="0" step="0.1" placeholder="0">
+        </div>
+        <div class="field">
+          <label for="inSloppy">Sloppy plays</label>
+          <input type="number" id="inSloppy" inputmode="numeric" min="0" placeholder="0">
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="field">
+        <label for="inSpot1">Study spot 1 <span class="optional">optional</span></label>
+        <input type="text" id="inSpot1" placeholder="BB vs BTN SRP 853r" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="inSpot2">Study spot 2 <span class="optional">optional</span></label>
+        <input type="text" id="inSpot2" placeholder="SB vs BB 4BP 883sds" autocomplete="off">
+      </div>
+      <p class="hint">Spots you enter tonight appear on the Study page tomorrow morning.</p>
+
+      <button class="btn btn-primary btn-block" id="saveEntryBtn">Save session</button>
+    </div>
+  </section>
+
+  <!-- ============ STUDY ============ -->
+  <section class="tab" id="tab-study" hidden>
+    <div class="study-head">
+      <h2 class="study-title">Today's study</h2>
+      <p class="study-date" id="studyDate"></p>
+    </div>
+    <div id="studyCards"></div>
+  </section>
+
+</main>
+
+<nav class="tabbar" id="mobileNav">
+  <button class="tabbar-btn active" data-tab="dashboard"><span class="tabbar-ico">◆</span>Dashboard</button>
+  <button class="tabbar-btn" data-tab="input"><span class="tabbar-ico">✎</span>Daily Input</button>
+  <button class="tabbar-btn" data-tab="study"><span class="tabbar-ico">♠</span>Study</button>
+</nav>
+
+<!-- ============ SETTINGS MODAL ============ -->
+<div class="modal-overlay" id="settingsModal" hidden>
+  <div class="modal">
+    <h2 class="card-title">GitHub sync</h2>
+    <p class="hint">Data lives in <code>data.json</code> in your repo. Use a fine-grained personal access token scoped to this one repository with Contents read &amp; write. Keep the repo private.</p>
+    <div class="field">
+      <label for="cfgUser">GitHub username</label>
+      <input type="text" id="cfgUser" autocomplete="off" autocapitalize="off" placeholder="yourname">
+    </div>
+    <div class="field">
+      <label for="cfgRepo">Repository name</label>
+      <input type="text" id="cfgRepo" autocomplete="off" autocapitalize="off" placeholder="poker-tracker">
+    </div>
+    <div class="field">
+      <label for="cfgBranch">Branch</label>
+      <input type="text" id="cfgBranch" autocomplete="off" autocapitalize="off" placeholder="main">
+    </div>
+    <div class="field">
+      <label for="cfgToken">Personal access token</label>
+      <input type="password" id="cfgToken" autocomplete="off" placeholder="github_pat_…">
+    </div>
+    <p class="hint err" id="cfgError" hidden></p>
+    <div class="modal-actions">
+      <button class="btn" id="cfgCancel">Cancel</button>
+      <button class="btn btn-primary" id="cfgSave">Save &amp; connect</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" hidden>
+  <span id="toastMsg"></span>
+  <button class="toast-action" id="toastAction" hidden></button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
