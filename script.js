@@ -343,38 +343,34 @@ function setPhDone(idx, val) {
 
 /* ---------------- rendering: dashboard ---------------- */
 
-function renderVerdict(life, trail) {
-  const line = $("verdictLine"), sub = $("verdictSub");
-  line.className = "verdict-line";
+function renderComparison(life, trail) {
+  const card = $("compCard"), line = $("compLine"), sub = $("compSub");
+  card.className = "comp-card";
 
-  if (life.hands === 0) {
-    line.textContent = "The ledger is open.";
-    sub.textContent = "Log tonight's session to start your baseline.";
-    return;
-  }
+  if (life.hands === 0) { card.hidden = true; return; }
+  card.hidden = false;
+
   if (life.hands <= TRAILING_HANDS) {
-    line.textContent = "Building your baseline.";
-    sub.textContent = `${fmtNum(life.hands)} lifetime hands logged — comparisons unlock past ${fmtNum(TRAILING_HANDS)}.`;
+    line.textContent = "Building baseline";
+    sub.textContent = `${fmtNum(life.hands)} of ${fmtNum(TRAILING_HANDS)}+ hands — comparison unlocks after that.`;
     return;
   }
   if (life.puntRate === 0) {
-    line.textContent = "Not a blind punted. Ever.";
-    sub.textContent = "Lifetime punt rate is zero — nothing to compare against.";
+    line.textContent = "Lifetime punt rate is 0";
+    sub.textContent = "Nothing to compare against.";
     return;
   }
   const diff = ((trail.puntRate - life.puntRate) / life.puntRate) * 100;
   const pct = Math.abs(Math.round(diff));
+  sub.textContent = `Punt rate: ${trail.puntRate.toFixed(1)} BB/100 now vs ${life.puntRate.toFixed(1)} lifetime`;
   if (diff <= -5) {
     line.textContent = `${pct}% below lifetime average. Excellent work.`;
-    line.classList.add("good");
-    sub.textContent = `Trailing punt rate ${trail.puntRate.toFixed(1)} BB/100 vs ${life.puntRate.toFixed(1)} lifetime.`;
+    card.classList.add("good");
   } else if (diff >= 5) {
     line.textContent = `${pct}% above lifetime average. Focus on discipline.`;
-    line.classList.add("bad");
-    sub.textContent = `Trailing punt rate ${trail.puntRate.toFixed(1)} BB/100 vs ${life.puntRate.toFixed(1)} lifetime.`;
+    card.classList.add("bad");
   } else {
-    line.textContent = "Holding steady at your lifetime average.";
-    sub.textContent = `Trailing punt rate ${trail.puntRate.toFixed(1)} BB/100 vs ${life.puntRate.toFixed(1)} lifetime.`;
+    line.textContent = "In line with lifetime average.";
   }
 }
 
@@ -462,10 +458,10 @@ function renderChart() {
     data: {
       labels,
       datasets: [
-        { label: "BB punted", data: bbData, yAxisID: "yBB", borderColor: col("--red"), backgroundColor: col("--red"), tension: 0.3, spanGaps: true, pointRadius: 3, pointHoverRadius: 5, borderWidth: 2 },
-        { label: "Punt freq %", data: pfData, yAxisID: "yPct", borderColor: col("--amber"), backgroundColor: col("--amber"), tension: 0.3, spanGaps: true, pointRadius: 3, pointHoverRadius: 5, borderWidth: 2 },
-        { label: "Sloppy freq %", data: sfData, yAxisID: "yPct", borderColor: col("--brass"), backgroundColor: col("--brass"), tension: 0.3, spanGaps: true, pointRadius: 3, pointHoverRadius: 5, borderWidth: 2 },
-        { label: "Spots studied", data: stData, yAxisID: "yCount", borderColor: col("--green"), backgroundColor: col("--green"), tension: 0.3, pointRadius: 3, pointHoverRadius: 5, borderWidth: 2, borderDash: [5, 4] }
+        { label: "BB punted", data: bbData, yAxisID: "yBB", borderColor: col("--red"), backgroundColor: col("--red"), tension: 0.3, spanGaps: true, pointRadius: 3.5, pointHoverRadius: 7, borderWidth: 3 },
+        { label: "Punt freq %", data: pfData, yAxisID: "yPct", borderColor: col("--amber"), backgroundColor: col("--amber"), tension: 0.3, spanGaps: true, pointRadius: 3.5, pointHoverRadius: 7, borderWidth: 3 },
+        { label: "Sloppy freq %", data: sfData, yAxisID: "yPct", borderColor: col("--brass"), backgroundColor: col("--brass"), tension: 0.3, spanGaps: true, pointRadius: 3.5, pointHoverRadius: 7, borderWidth: 3 },
+        { label: "Spots studied", data: stData, yAxisID: "yCount", borderColor: col("--green"), backgroundColor: col("--green"), tension: 0.3, pointRadius: 3.5, pointHoverRadius: 7, borderWidth: 3, borderDash: [6, 5] }
       ]
     },
     options: {
@@ -474,7 +470,7 @@ function renderChart() {
       interaction: { mode: "index", intersect: false },
       plugins: {
         legend: {
-          labels: { color: col("--muted"), boxWidth: 10, boxHeight: 10, usePointStyle: true, pointStyle: "circle", font: { family: "Sora", size: 11 } }
+          labels: { color: col("--muted"), boxWidth: 12, boxHeight: 12, padding: 14, usePointStyle: true, pointStyle: "circle", font: { family: "Sora", size: 13, weight: 600 } }
         },
         tooltip: {
           backgroundColor: "#1a241f",
@@ -494,9 +490,9 @@ function renderChart() {
         }
       },
       scales: {
-        x: { grid: { color: gridColor }, ticks: { color: tickColor, maxTicksLimit: 8, font: { family: "Sora", size: 10 } } },
-        yBB: { position: "left", beginAtZero: true, grid: { color: gridColor }, ticks: { color: tickColor, font: { family: "Spline Sans Mono", size: 10 } }, title: { display: true, text: "BB", color: tickColor, font: { size: 10 } } },
-        yPct: { position: "right", beginAtZero: true, grid: { drawOnChartArea: false }, ticks: { color: tickColor, font: { family: "Spline Sans Mono", size: 10 }, callback: (v) => v + "%" } },
+        x: { grid: { color: gridColor }, ticks: { color: tickColor, maxTicksLimit: 6, font: { family: "Sora", size: 12 } } },
+        yBB: { position: "left", beginAtZero: true, grid: { color: gridColor }, ticks: { color: tickColor, font: { family: "Spline Sans Mono", size: 12 } }, title: { display: false } },
+        yPct: { position: "right", beginAtZero: true, grid: { drawOnChartArea: false }, ticks: { color: tickColor, font: { family: "Spline Sans Mono", size: 12 }, callback: (v) => v + "%" } },
         yCount: { display: false, beginAtZero: true, suggestedMax: 4 }
       }
     }
@@ -736,7 +732,7 @@ async function saveSettings() {
 function renderDashboard() {
   const life = lifetimeStats();
   const trail = trailingStats();
-  renderVerdict(life, trail);
+  renderComparison(life, trail);
   renderKPIs(trail);
   renderStatTable(life, trail);
   renderChart();

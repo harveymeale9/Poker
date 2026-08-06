@@ -7,7 +7,7 @@
 <title>Felt Ledger</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Sora:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Spline+Sans+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <script>document.write('<link rel="stylesheet" href="styles.css?v=' + Date.now() + '">');</script>
@@ -34,32 +34,8 @@
       <button class="btn btn-small" id="connectBannerBtn">Connect</button>
     </div>
 
-    <div class="verdict" id="verdict">
-      <p class="verdict-line" id="verdictLine">Building your baseline.</p>
-      <p class="verdict-sub" id="verdictSub">Log tonight's session to get started.</p>
-    </div>
-
-    <div class="kpi-grid">
-      <div class="kpi-card">
-        <div class="kpi-label">Punt Rate</div>
-        <div class="kpi-value" id="kpiPuntRate">—</div>
-        <div class="kpi-unit">BB / 100 · trailing 7,500 hands</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Punt Frequency</div>
-        <div class="kpi-value" id="kpiPuntFreq">—</div>
-        <div class="kpi-unit">punts / hands · trailing 7,500</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Sloppy Play Frequency</div>
-        <div class="kpi-value" id="kpiSloppyFreq">—</div>
-        <div class="kpi-unit">sloppy / hands · trailing 7,500</div>
-      </div>
-    </div>
-
     <div class="card chart-card">
       <div class="chart-head">
-        <h2 class="card-title">Daily discipline</h2>
         <div class="chips" id="rangeChips">
           <button class="chip" data-range="30">30d</button>
           <button class="chip active" data-range="90">90d</button>
@@ -67,11 +43,34 @@
         </div>
       </div>
       <div class="chart-wrap"><canvas id="mainChart"></canvas></div>
-      <p class="chart-empty" id="chartEmpty" hidden>No sessions logged yet — the chart fills in as you play.</p>
+      <p class="chart-empty" id="chartEmpty" hidden>No sessions yet. Log tonight's session in Daily Input.</p>
+    </div>
+
+    <div class="comp-card" id="compCard" hidden>
+      <div class="comp-line" id="compLine"></div>
+      <div class="comp-sub" id="compSub"></div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Punt Rate</div>
+        <div class="kpi-value" id="kpiPuntRate">—</div>
+        <div class="kpi-unit">BB / 100 · last 7,500 hands</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Punt Frequency</div>
+        <div class="kpi-value" id="kpiPuntFreq">—</div>
+        <div class="kpi-unit">last 7,500 hands</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Sloppy Play Frequency</div>
+        <div class="kpi-value" id="kpiSloppyFreq">—</div>
+        <div class="kpi-unit">last 7,500 hands</div>
+      </div>
     </div>
 
     <div class="card lifetime-card">
-      <h2 class="card-title">Lifetime vs trailing 7,500</h2>
+      <h2 class="card-title">Lifetime vs last 7,500</h2>
       <div class="stat-table" id="statTable"></div>
     </div>
   </section>
