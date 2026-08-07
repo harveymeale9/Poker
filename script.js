@@ -190,7 +190,38 @@ async function ghSave() {
   return true;
 }
 
-/* ---------------- persistence pipeline ---------------- */
+/* ---------- persistence pipeline ---------- */
+
+const DIRTY_KEY = "feltledger_dirty";
+function getDirty() { return localStorage.getItem(DIRTY_KEY) === "1"; }
+function setDirty(v) {
+  localStorage.setItem(DIRTY_KEY, v ? "1" : "0");
+  const b = $("dirtyBanner");
+  if (b) b.hidden = !(v && getConfig());
+}
+
+/* Union-merge: nothing in this app is ever deleted, so a merge can only add.
+   Entries collide on date (local wins — it's the device you just used).
+   Spots collide on id (the copy with more review progress wins; tie → longer notes). */
+function mergeDb(remoteDb, localDb) {
+  const entries = new Map();
+  remoteDb.dailyEntries.forEach((e) => entries.set(e.date, e));
+  localDb.dailyEntries.forEach((e) => entries.set(e.date, e));
+  const spots = new Map();
+  remoteDb.studySpots.forEach((s) => spots.set(s.id, s));
+  localDb.studySpots.forEach((s) => {
+    const r = spots.get(s.id);
+    if (!r) { spots.set(s.id, s); return; }
+    let pick;
+    if (s.reviewHistory.length !== r.reviewHistory.length) {
+      pick = s.reviewHistory.length > r.reviewHistory.length ? s : r;
+    } else {
+      pick = (s.notes || "").length >= (r.notes || "").length ? s : r;
+    }
+    spots.set(s.id, pick);
+  });
+  return normalize({ dailyEntries: [...entries.values()], studySpots: [...spots.values()] });
+}
 
 function setSync(state, label) {
   const dot = $("syncDot"), lab = $("syncLabel");
@@ -200,14 +231,16 @@ function setSync(state, label) {
 
 async function persist() {
   localStorage.setItem(CACHE_KEY, JSON.stringify(db));
+  setDirty(true);
   if (!getConfig()) { setSync("local"); return; }
   setSync("syncing");
   try {
     await ghSave();
+    setDirty(false);
     setSync("synced");
   } catch (e) {
     setSync("error");
-    toast(e.message || "Couldn't save to GitHub. Data is kept on this device.");
+    toast(e.message || "Couldn't save to GitHub. Data is kept on this device and will retry.");
   }
 }
 
@@ -703,16 +736,14 @@ async function saveSettings() {
       toast("Connected — data.json created in your repo.");
     } else if (remote && remote.data) {
       const remoteDb = normalize(remote.data);
-      const remoteEmpty = remoteDb.dailyEntries.length === 0 && remoteDb.studySpots.length === 0;
-      const localHasData = db.dailyEntries.length > 0 || db.studySpots.length > 0;
-      if (remoteEmpty && localHasData) {
-        await ghSave(); // keep local, push it up
-      } else {
-        db = remoteDb; // repo is the source of truth
-        localStorage.setItem(CACHE_KEY, JSON.stringify(db));
-      }
+      const merged = mergeDb(remoteDb, db);
+      const remoteBehind = JSON.stringify(merged) !== JSON.stringify(remoteDb);
+      db = merged;
+      localStorage.setItem(CACHE_KEY, JSON.stringify(db));
+      if (remoteBehind) await ghSave();
       toast("Connected to GitHub.");
     }
+    setDirty(false);
     setSync("synced");
     $("settingsModal").hidden = true;
     $("connectBanner").hidden = true;
@@ -773,28 +804,38 @@ async function init() {
   });
 
   const cfg = getConfig();
+  setDirty(getDirty()); // refresh banner visibility
   if (!cfg) {
     setSync("local");
     $("connectBanner").hidden = false;
     return;
   }
 
-  // Pull the latest from GitHub
+  // Pull from GitHub, but MERGE with local — never overwrite newer local data.
   setSync("syncing");
   try {
     const remote = await ghLoad();
     if (remote && remote.missing) {
-      setSync("local", "No data.json");
-      toast("data.json not found in the repo — it'll be created on your first save.");
-    } else if (remote && remote.data) {
-      db = normalize(remote.data);
-      localStorage.setItem(CACHE_KEY, JSON.stringify(db));
+      // No data.json in the repo yet — publish what we have.
+      await ghSave();
+      setDirty(false);
       setSync("synced");
+    } else if (remote && remote.data) {
+      const remoteDb = normalize(remote.data);
+      const merged = mergeDb(remoteDb, db);
+      const remoteBehind = JSON.stringify(merged) !== JSON.stringify(remoteDb);
+      db = merged;
+      localStorage.setItem(CACHE_KEY, JSON.stringify(db));
       renderAll();
+      if (remoteBehind || getDirty()) {
+        await ghSave(); // push local changes the repo doesn't have yet
+      }
+      setDirty(false);
+      setSync("synced");
     }
   } catch (e) {
     setSync("error");
-    toast("Couldn't reach GitHub — showing data cached on this device.");
+    toast("Couldn't sync with GitHub — your data is safe on this device and will retry next time.");
   }
 }
 

@@ -18,7 +18,7 @@
   --radius-sm: 14px;
   --font-ui: "Sora", system-ui, sans-serif;
   --font-mono: "Spline Sans Mono", ui-monospace, monospace;
-  --tabbar-h: 74px;
+  --tabbar-h: 122px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -70,6 +70,16 @@ code { font-family: var(--font-mono); font-size: 0.9em; color: var(--brass); }
 .tab > * + * { margin-top: 14px; }
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
+}
+
+/* ---------- unsaved warning ---------- */
+.warn-banner {
+  position: sticky; top: 0; z-index: 39;
+  background: rgba(239, 107, 88, 0.15);
+  border-bottom: 1.5px solid rgba(239, 107, 88, 0.5);
+  color: var(--red);
+  font-size: 15px; font-weight: 700;
+  padding: 12px 16px; text-align: center;
 }
 
 /* ---------- banner ---------- */
@@ -309,22 +319,28 @@ input[type="date"] { color-scheme: dark; }
 .tabbar {
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 40;
   display: flex;
-  background: rgba(23, 32, 27, 0.96);
+  gap: 6px;
+  padding: 10px 10px calc(env(safe-area-inset-bottom) + 10px);
+  background: rgba(23, 32, 27, 0.97);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-top: 1px solid var(--line);
-  padding-bottom: env(safe-area-inset-bottom);
 }
 .tabbar-btn {
   flex: 1; background: none; border: none; cursor: pointer;
-  font-family: var(--font-ui); font-size: 14px; font-weight: 700;
-  color: var(--faint);
-  min-height: var(--tabbar-h);
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+  font-family: var(--font-ui); font-size: 17px; font-weight: 800;
+  color: var(--muted);
+  min-height: 92px;
+  border-radius: 18px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
   -webkit-tap-highlight-color: transparent;
 }
-.tabbar-ico { font-size: 26px; line-height: 1; }
-.tabbar-btn.active { color: var(--brass); }
+.tabbar-ico { font-size: 40px; line-height: 1; }
+.tabbar-btn.active {
+  color: #16130c;
+  background: var(--brass);
+}
+.tabbar-btn:active { transform: scale(0.97); }
 
 /* ---------- modal ---------- */
 .modal-overlay {
