@@ -8,6 +8,15 @@
       "sloppyPlays": 1,
       "studySpot1": "Sb vs BTN 3bp J82tt",
       "studySpot2": ""
+    },
+    {
+      "date": "2026-08-07",
+      "handsPlayed": 2121,
+      "punts": 2,
+      "bbPunted": 146.7,
+      "sloppyPlays": 2,
+      "studySpot1": "SB V BB SRP T48r , Ktt (xc vs 3/4), Qo",
+      "studySpot2": ""
     }
   ],
   "studySpots": [
@@ -19,6 +28,16 @@
       "reviewStage": 0,
       "reviewHistory": [],
       "nextReviewDate": "2026-08-07",
+      "retired": false
+    },
+    {
+      "id": "smsj4pizxfol93",
+      "createdDate": "2026-08-07",
+      "spotText": "SB V BB SRP T48r , Ktt (xc vs 3/4), Qo",
+      "notes": "",
+      "reviewStage": 0,
+      "reviewHistory": [],
+      "nextReviewDate": "2026-08-08",
       "retired": false
     }
   ]
