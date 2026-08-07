@@ -1,4 +1,25 @@
 {
-  "dailyEntries": [],
-  "studySpots": []
+  "dailyEntries": [
+    {
+      "date": "2026-08-06",
+      "handsPlayed": 1118,
+      "punts": 1,
+      "bbPunted": 88.8,
+      "sloppyPlays": 1,
+      "studySpot1": "Sb vs BTN 3bp J82tt",
+      "studySpot2": ""
+    }
+  ],
+  "studySpots": [
+    {
+      "id": "smsif1g3yfb7dv",
+      "createdDate": "2026-08-06",
+      "spotText": "Sb vs BTN 3bp J82tt",
+      "notes": "",
+      "reviewStage": 0,
+      "reviewHistory": [],
+      "nextReviewDate": "2026-08-07",
+      "retired": false
+    }
+  ]
 }
