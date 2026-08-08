@@ -39,10 +39,15 @@
       "id": "smsj4pizxfol93",
       "createdDate": "2026-08-07",
       "spotText": "SB V BB SRP T48r , Ktt (xc vs 3/4), Qo",
-      "notes": "",
-      "reviewStage": 0,
-      "reviewHistory": [],
-      "nextReviewDate": "2026-08-08",
+      "notes": "[2026-08-08] Turn in position will be betting this size pretty under bluffed. It's actually a pretty good size to use with weak King x because it stunts my ability to check raise with stronger top heads and it still gets value from worse. But on the river the cold the cold in the turn is okay. But we have to plan to lead any Jack or queen just for 2/3 which is going to be pretty perceived to be under bluff by him and gives us extra opportunity to win the pot when we don't hit our straight",
+      "reviewStage": 1,
+      "reviewHistory": [
+        {
+          "date": "2026-08-08",
+          "stage": 0
+        }
+      ],
+      "nextReviewDate": "2026-08-11",
       "retired": false
     }
   ]
