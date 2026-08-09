@@ -26,6 +26,15 @@
       "sloppyPlays": 3,
       "studySpot1": "SB 3B vs CO 7c7h3c (KdQc)",
       "studySpot2": "BB 3b v EP Jd7dJc (1/3 cb) we peel TcTd IP Js ott (1/3 barrel) 9c river vs 1.3x jam"
+    },
+    {
+      "date": "2026-08-09",
+      "handsPlayed": 3616,
+      "punts": 3,
+      "bbPunted": 247,
+      "sloppyPlays": 5,
+      "studySpot1": "BB 3b vs CO 542tt",
+      "studySpot2": ""
     }
   ],
   "studySpots": [
@@ -87,6 +96,16 @@
         }
       ],
       "nextReviewDate": "2026-08-12",
+      "retired": false
+    },
+    {
+      "id": "smsly8doh9x5mf",
+      "createdDate": "2026-08-09",
+      "spotText": "BB 3b vs CO 542tt",
+      "notes": "",
+      "reviewStage": 0,
+      "reviewHistory": [],
+      "nextReviewDate": "2026-08-10",
       "retired": false
     }
   ]
