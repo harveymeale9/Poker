@@ -63,10 +63,15 @@
       "id": "smskjkvo7yro9u",
       "createdDate": "2026-08-08",
       "spotText": "SB 3B vs CO 7c7h3c (KdQc)",
-      "notes": "",
-      "reviewStage": 0,
-      "reviewHistory": [],
-      "nextReviewDate": "2026-08-09",
+      "notes": "[2026-08-09] Be aware of backdoor combo selection",
+      "reviewStage": 1,
+      "reviewHistory": [
+        {
+          "date": "2026-08-09",
+          "stage": 0
+        }
+      ],
+      "nextReviewDate": "2026-08-12",
       "retired": false
     },
     {
