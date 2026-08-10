@@ -35,6 +35,15 @@
       "sloppyPlays": 5,
       "studySpot1": "BB 3b vs CO 542tt",
       "studySpot2": ""
+    },
+    {
+      "date": "2026-08-10",
+      "handsPlayed": 3133,
+      "punts": 0,
+      "bbPunted": 0,
+      "sloppyPlays": 0,
+      "studySpot1": "3BP BTN vs CO K7ss3d (AsJs)",
+      "studySpot2": ""
     }
   ],
   "studySpots": [
@@ -111,6 +120,16 @@
         }
       ],
       "nextReviewDate": "2026-08-13",
+      "retired": false
+    },
+    {
+      "id": "smsnd7g8x6ode8",
+      "createdDate": "2026-08-10",
+      "spotText": "3BP BTN vs CO K7ss3d (AsJs)",
+      "notes": "",
+      "reviewStage": 0,
+      "reviewHistory": [],
+      "nextReviewDate": "2026-08-11",
       "retired": false
     }
   ]
