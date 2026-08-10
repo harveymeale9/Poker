@@ -102,10 +102,15 @@
       "id": "smsly8doh9x5mf",
       "createdDate": "2026-08-09",
       "spotText": "BB 3b vs CO 542tt",
-      "notes": "",
-      "reviewStage": 0,
-      "reviewHistory": [],
-      "nextReviewDate": "2026-08-10",
+      "notes": "[2026-08-10] You can shove range here versus the right opponents at the right stack. Depths probably including our basically every hand except Jack 10 suited. Even though we're not really three betting that that much, I just be wouldn't be mindful of blocking their Queens which is going to call and ideally unblocking there Jackson 10s so having an overcard to their Jackson 10s and having a raid on your opponent about what they're likely to do and just be mindful of stack depth and and play er type here",
+      "reviewStage": 1,
+      "reviewHistory": [
+        {
+          "date": "2026-08-10",
+          "stage": 0
+        }
+      ],
+      "nextReviewDate": "2026-08-13",
       "retired": false
     }
   ]
