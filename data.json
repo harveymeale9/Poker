@@ -44,6 +44,15 @@
       "sloppyPlays": 0,
       "studySpot1": "3BP BTN vs CO K7ss3d (AsJs)",
       "studySpot2": ""
+    },
+    {
+      "date": "2026-08-11",
+      "handsPlayed": 1281,
+      "punts": 1,
+      "bbPunted": 48,
+      "sloppyPlays": 3,
+      "studySpot1": "EP vs BB QTss4o",
+      "studySpot2": ""
     }
   ],
   "studySpots": [
@@ -130,6 +139,16 @@
       "reviewStage": 0,
       "reviewHistory": [],
       "nextReviewDate": "2026-08-11",
+      "retired": false
+    },
+    {
+      "id": "smsoqte56fcvi1",
+      "createdDate": "2026-08-11",
+      "spotText": "EP vs BB QTss4o",
+      "notes": "",
+      "reviewStage": 0,
+      "reviewHistory": [],
+      "nextReviewDate": "2026-08-12",
       "retired": false
     }
   ]
