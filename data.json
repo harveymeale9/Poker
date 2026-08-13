@@ -62,6 +62,15 @@
       "sloppyPlays": 4,
       "studySpot1": "",
       "studySpot2": ""
+    },
+    {
+      "date": "2026-08-13",
+      "handsPlayed": 3459,
+      "punts": 0,
+      "bbPunted": 0,
+      "sloppyPlays": 1,
+      "studySpot1": "K84r sb v bb srp (xr range)",
+      "studySpot2": ""
     }
   ],
   "studySpots": [
@@ -163,6 +172,16 @@
       "reviewStage": 0,
       "reviewHistory": [],
       "nextReviewDate": "2026-08-12",
+      "retired": false
+    },
+    {
+      "id": "smsrqvig4wzs07",
+      "createdDate": "2026-08-13",
+      "spotText": "K84r sb v bb srp (xr range)",
+      "notes": "",
+      "reviewStage": 0,
+      "reviewHistory": [],
+      "nextReviewDate": "2026-08-14",
       "retired": false
     }
   ]
