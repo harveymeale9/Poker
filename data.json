@@ -145,9 +145,14 @@
       "createdDate": "2026-08-10",
       "spotText": "3BP BTN vs CO K7ss3d (AsJs)",
       "notes": "",
-      "reviewStage": 0,
-      "reviewHistory": [],
-      "nextReviewDate": "2026-08-11",
+      "reviewStage": 1,
+      "reviewHistory": [
+        {
+          "date": "2026-08-13",
+          "stage": 0
+        }
+      ],
+      "nextReviewDate": "2026-08-16",
       "retired": false
     },
     {
