@@ -71,6 +71,15 @@
       "sloppyPlays": 1,
       "studySpot1": "K84r sb v bb srp (xr range)",
       "studySpot2": ""
+    },
+    {
+      "date": "2026-08-15",
+      "handsPlayed": 4227,
+      "punts": 0,
+      "bbPunted": 0,
+      "sloppyPlays": 0,
+      "studySpot1": "SbvBB SRP JcTh8h, Ah6s turn play after cbetting and x facing big bet",
+      "studySpot2": ""
     }
   ],
   "studySpots": [
@@ -182,6 +191,16 @@
       "reviewStage": 0,
       "reviewHistory": [],
       "nextReviewDate": "2026-08-14",
+      "retired": false
+    },
+    {
+      "id": "smst97s6o2a4yn",
+      "createdDate": "2026-08-15",
+      "spotText": "SbvBB SRP JcTh8h, Ah6s turn play after cbetting and x facing big bet",
+      "notes": "",
+      "reviewStage": 0,
+      "reviewHistory": [],
+      "nextReviewDate": "2026-08-16",
       "retired": false
     }
   ]
